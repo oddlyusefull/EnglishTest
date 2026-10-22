@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>English Level Mock Test</title>
+<style>
+:root{--bg:#f6f5f1;--fg:#1d1d1b;--card:#fff;--mut:#6b6a64;--acc:#2f5fd0;--ok:#1f8a4c;--bad:#c23b3b;--line:#e2e0d8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161618;--fg:#ececea;--card:#222226;--mut:#9a9a94;--acc:#7a9cf0;--ok:#4fc17f;--bad:#ee7a7a;--line:#34343a}}
+:root[data-theme="dark"]{--bg:#161618;--fg:#ececea;--card:#222226;--mut:#9a9a94;--acc:#7a9cf0;--ok:#4fc17f;--bad:#ee7a7a;--line:#34343a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:560px;margin:0 auto;padding:20px 16px 40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:14px}
+h1{font-size:24px;margin:0 0 8px}h2{font-size:18px;margin:0 0 10px}
+p{margin:0 0 10px}.mut{color:var(--mut);font-size:14px}
+.tag{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--acc);text-transform:uppercase;margin-bottom:8px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:16px}
+.bar i{display:block;height:100%;background:var(--acc);transition:width .25s}
+.pass{background:var(--bg);border-left:3px solid var(--acc);padding:10px 12px;border-radius:8px;margin-bottom:12px;font-style:italic}
+.q{font-size:18px;font-weight:600;margin-bottom:14px}
+button{font:inherit;color:inherit;cursor:pointer}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:10px}
+.opt.sel{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 12%,var(--bg))}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:13px 20px;font-weight:600;width:100%}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.ghost{background:transparent;color:var(--acc);border:1.5px solid var(--acc);margin-top:8px}
+.big{font-size:56px;font-weight:800;color:var(--acc);line-height:1;margin:6px 0}
+.row{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:14px}
+.row b{width:28px}.row .bar{flex:1;margin:0}.row span{width:34px;text-align:right}
+.rv{border-top:1px solid var(--line);padding:10px 0;font-size:14px}
+.rv .a{color:var(--ok);font-weight:600}.rv .w{color:var(--bad)}
+.tm{text-align:right;font-weight:700;color:var(--acc);margin-bottom:6px}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+var LV=['A1','A2','B1','B2','C1'];
+var DESC={
+'Pra-A1':'Pemula awal. Fokus dulu pada kosakata dasar, salam, angka, dan kalimat sangat sederhana.',
+'A1':'Dasar. Kamu bisa memahami dan memakai ungkapan sehari-hari yang sangat sederhana.',
+'A2':'Elementer. Kamu bisa berkomunikasi dalam situasi rutin dan membahas topik umum dengan kalimat sederhana.',
+'B1':'Menengah. Kamu bisa menghadapi sebagian besar situasi saat bepergian atau bekerja, dan menulis teks sederhana yang runtut.',
+'B2':'Menengah atas. Kamu bisa berbicara cukup lancar dan spontan serta memahami teks yang kompleks.',
+'C1':'Mahir. Kamu bisa memakai bahasa secara fleksibel untuk keperluan akademik dan profesional.'};
+// [level, bagian, soal, pilihan, indeks jawaban benar, teks bacaan]
+var Q=[
+[0,'Grammar','She ___ a teacher.',['is','are','am'],0],
+[0,'Grammar','I ___ from Indonesia.',['is','am','are'],1],
+[0,'Grammar','___ is your name?',['Where','Who','What'],2],
+[0,'Grammar','There ___ two books on the table.',['is','are','am'],1],
+[0,'Grammar','He ___ breakfast at 7 every day.',['have','has','having'],1],
+[0,'Vocabulary','A place where you buy medicine is a ___.',['library','bakery','pharmacy'],2],
+[1,'Grammar','I ___ TV when she called.',['watched','was watching','watch'],1],
+[1,'Grammar','Yesterday we ___ to the beach.',['go','gone','went'],2],
+[1,'Grammar','She is ___ than her brother.',['taller','tall','tallest'],0],
+[1,'Grammar','Do you have ___ milk?',['some','any','an'],1],
+[1,'Vocabulary','It is raining. Take an ___.',['ambulance','uniform','umbrella'],2],
+[1,'Reading','When does Tom close the shop?',['At 9','At 6','At 1'],1,'Tom opens the shop at 9 and closes at 6. He eats lunch at 1.'],
+[2,'Grammar','If it rains tomorrow, we ___ at home.',['stay','stayed','will stay'],2],
+[2,'Grammar','I’ve lived here ___ 2019.',['for','since','during'],1],
+[2,'Grammar','The report ___ by the manager yesterday.',['wrote','is writing','was written'],2],
+[2,'Grammar','He told me he ___ the film before.',['saw','had seen','has seen'],1],
+[2,'Vocabulary','There was heavy ___ on the motorway this morning.',['crowd','traffic','road'],1],
+[2,'Reading','Why did Anna start jogging?',['She dislikes gyms','The park is free','The gym was too expensive'],2,'Anna wanted to join the gym, but the monthly fee was too high, so she started jogging in the park instead.'],
+[3,'Grammar','I wish I ___ more time to study last month.',['had','have','had had'],2],
+[3,'Grammar','Hardly ___ the office when it started to rain.',['he left','he had left','had he left'],2],
+[3,'Grammar','She suggested ___ a taxi.',['taking','to take','take'],0],
+[3,'Grammar','By this time next year, I ___ my degree.',['will finish','am finishing','will have finished'],2],
+[3,'Vocabulary','The company’s profits ___ sharply last quarter.',['plummeted','ascended','inflated'],0],
+[3,'Reading','What do the authors suggest?',['Sleep has no link to grades','Grades cause sleep','Sleep may not directly cause better grades'],2,'Although the study found a correlation between sleep and grades, the authors warned that it does not prove one causes the other.'],
+[4,'Grammar','Had she known about the delay, she ___ earlier.',['would leave','would have left','had left'],1],
+[4,'Grammar','Not only ___ late, but he also forgot the documents.',['he arrived','arrived he','did he arrive'],2],
+[4,'Vocabulary','The minister’s remarks were ___ of a deeper disagreement.',['symmetrical','symptomatic','sympathetic'],1],
+[4,'Vocabulary','The new law is likely to have far-___ consequences.',['going','looking','reaching'],2],
+[4,'Vocabulary','His argument, though eloquent, was ___; it contained no real evidence.',['vivacious','vicarious','vacuous'],2],
+[4,'Reading','What does “ostensibly” suggest?',['Deliberately','Apparently, but perhaps not truly','Reluctantly'],1,'The author’s tone, ostensibly neutral, subtly privileges the corporate perspective by framing critics as uninformed.']
+];
+var EXTRA=[
+[0,'Grammar','They ___ at home now.',['is','are','am'],1],
+[0,'Grammar','This is ___ apple.',['a','an','the'],1],
+[0,'Grammar','I ___ like coffee.',['don’t','doesn’t','not'],0],
+[0,'Vocabulary','The opposite of “hot” is ___.',['cold','warm','big'],0],
+[0,'Vocabulary','Monday, Tuesday, ___',['Wednesday','Friday','Sunday'],0],
+[0,'Reading','What color is Lisa’s bag?',['Red','Blue','Black'],1,'Lisa has a new bag. It is blue and very small.'],
+[1,'Grammar','We ___ visit my grandmother next week.',['are going to','went','going'],0],
+[1,'Grammar','He can’t come ___ he is ill.',['because','but','so'],0],
+[1,'Grammar','How ___ does this book cost?',['many','much','long'],1],
+[1,'Vocabulary','A person who cooks in a restaurant is a ___.',['chef','pilot','driver'],0],
+[1,'Vocabulary','You must ___ your seatbelt in the car.',['fasten','fix','hold'],0],
+[1,'Reading','Why is Ben tired?',['He slept very little','He is sick','He walked a lot'],0,'Ben went to bed at 3 a.m. because he finished a report for his boss.'],
+[2,'Grammar','You ___ smoke here. It is forbidden.',['mustn’t','don’t have to','needn’t'],0],
+[2,'Grammar','I’m looking forward ___ you.',['to see','to seeing','see'],1],
+[2,'Grammar','The woman ___ lives next door is a doctor.',['who','which','whose'],0],
+[2,'Vocabulary','Could you ___ me a favour?',['do','make','take'],0],
+[2,'Vocabulary','I’m ___ at cooking; I always burn the food.',['terrible','terribly','terror'],0],
+[2,'Reading','What is the writer’s main point?',['Offices are cheaper','Working from home is always easier','Working from home needs discipline'],2,'Many people think working from home is easier, but without a clear routine, it is hard to separate work from rest.'],
+[3,'Grammar','He denied ___ the money.',['to take','taking','take'],1],
+[3,'Grammar','If I ___ you, I would apologise.',['am','were','was'],1],
+[3,'Grammar','The house, ___ roof was damaged, was sold cheaply.',['which','that','whose'],2],
+[3,'Vocabulary','The two companies decided to ___ forces.',['join','unite','merge'],0],
+[3,'Vocabulary','The manager was reluctant to ___ the deadline.',['extend','extent','extinct'],0],
+[3,'Reading','What problem is mentioned?',['The policy is too ambitious','No money has been arranged','The critics are praised'],1,'While the new policy has been praised for its ambition, its critics point out that no funding has been secured.'],
+[4,'Grammar','Rarely ___ such a talented performer.',['have I seen','I have seen','I saw'],0],
+[4,'Grammar','It is essential that he ___ present at the hearing.',['is','be','will be'],1],
+[4,'Vocabulary','She gave an ___ account of the incident, leaving out nothing.',['cursory','exhaustive','evasive'],1],
+[4,'Vocabulary','The scandal ___ his reputation beyond repair.',['tarnished','fostered','bolstered'],0],
+[4,'Vocabulary','Their efforts were ___ by a lack of funding.',['hampered','harnessed','hastened'],0],
+[4,'Reading','What does the author imply about the decision?',['It was fully voluntary','It may not have been truly unanimous','It was delayed by a vote'],1,'The committee’s decision, though presented as unanimous, was reached only after several members were pressured to withdraw their objections.']
+];
+Q=Q.concat(EXTRA);
+var QB=Q.slice(),app=document.getElementById('app'),i=0,ans=[],sel=-1,T=0,tm=null,LIM=2400,done=false;
+function sh(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)),t=a[k];a[k]=a[j];a[j]=t}return a}
+function build(){var out=[];for(var l=0;l<5;l++){sh(QB.filter(function(q){return q[0]==l})).forEach(function(q){var s=sh(q[3].map(function(t,k){return[t,k==q[4]]}));out.push([q[0],q[1],q[2],s.map(function(x){return x[0]}),s.findIndex(function(x){return x[1]}),q[5]])})}return out}
+function fmt(s){return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+function startTimer(){clearInterval(tm);T=LIM;done=false;tm=setInterval(function(){T--;var e=document.getElementById('tm');if(e)e.textContent='⏱ '+fmt(T);if(T<=0)result()},1000)}
+function card(n,all,sc,tot){var c=document.createElement('canvas');c.width=900;c.height=1000;var x=c.getContext('2d');x.fillStyle='#f6f5f1';x.fillRect(0,0,900,1000);x.fillStyle='#2f5fd0';x.font='600 34px sans-serif';x.fillText('ENGLISH LEVEL TEST',60,100);x.fillStyle='#1d1d1b';x.font='800 220px sans-serif';x.fillText(n,60,360);x.font='500 40px sans-serif';x.fillText('Skor total: '+all+' / '+Q.length,60,440);for(var l=0;l<5;l++){var y=530+l*85;x.fillStyle='#1d1d1b';x.font='600 34px sans-serif';x.fillText(LV[l],60,y+30);x.fillStyle='#e2e0d8';x.fillRect(160,y,560,30);x.fillStyle='#2f5fd0';x.fillRect(160,y,560*sc[l]/tot[l],30);x.fillStyle='#1d1d1b';x.fillText(sc[l]+'/'+tot[l],750,y+30)}x.fillStyle='#6b6a64';x.font='28px sans-serif';x.fillText('Skala CEFR A1–C1 · Mock test bahasa Inggris',60,950);var u=c.toDataURL('image/png');document.getElementById('im').innerHTML='<p class="mut">Tahan lama gambar di bawah untuk menyimpannya.</p><img src="'+u+'" style="width:100%;border-radius:12px;margin:8px 0">';c.toBlob(function(b){var f=new File([b],'hasil-english-test.png',{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],text:'Level bahasa Inggris saya: '+n}).catch(function(){});else{var a=document.createElement('a');a.href=u;a.download='hasil-english-test.png';a.click()}})}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function start(){Q=build();clearInterval(tm);i=0;ans=[];sel=-1;app.innerHTML='<div class="card"><span class="tag">Mock Test</span><h1>English Level Test</h1><p>60 soal pilihan ganda (Grammar, Vocabulary, Reading) dari level A1 sampai C1. Hasilnya berupa level CEFR beserta rincian per level.</p><p class="mut">Waktu pengerjaan 40 menit (timer mulai berjalan setelah kamu menekan Mulai tes). Urutan soal dan pilihan jawaban diacak. Kerjakan sendiri tanpa kamus atau penerjemah agar hasilnya akurat. Tidak ada pengurangan nilai untuk jawaban salah, jadi tebaklah jika ragu.</p></div><button class="btn" id="go">Mulai tes</button>';
+document.getElementById('go').onclick=function(){startTimer();show()}}
+function show(){var q=Q[i];sel=-1;
+var h='<div class="tm" id="tm">⏱ '+fmt(T)+'</div><div class="bar"><i style="width:'+(i/Q.length*100)+'%"></i></div><div class="card"><span class="tag">'+q[1]+' · Soal '+(i+1)+' dari '+Q.length+'</span>';
+if(q[5])h+='<div class="pass">'+esc(q[5])+'</div>';
+h+='<div class="q">'+esc(q[2])+'</div>';
+q[3].forEach(function(o,k){h+='<button class="opt" data-k="'+k+'">'+esc(o)+'</button>'});
+h+='</div><button class="btn" id="nx" disabled>'+(i==Q.length-1?'Lihat hasil':'Lanjut')+'</button>';
+app.innerHTML=h;
+var bs=app.querySelectorAll('.opt');
+bs.forEach(function(b){b.onclick=function(){sel=+b.dataset.k;bs.forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');document.getElementById('nx').disabled=false}});
+document.getElementById('nx').onclick=function(){ans[i]=sel;i++;i<Q.length?show():result()}}
+function result(){clearInterval(tm);if(done)return;done=true;
+var sc=[0,0,0,0,0],tot=[0,0,0,0,0];
+Q.forEach(function(q,k){tot[q[0]]++;if(ans[k]===q[4])sc[q[0]]++});
+var lvl=-1;
+for(var l=0;l<5;l++){if(sc[l]>=8)lvl=l;else break}
+var name=lvl<0?'Pra-A1':LV[lvl],plus=(lvl<4&&sc[lvl+1]>=6);
+var all=sc.reduce(function(a,b){return a+b},0);
+var h='<div class="card"><span class="tag">Hasil tes</span><p class="mut">Level kemampuan kamu</p><div class="big">'+name+(plus?'+':'')+'</div><p><b>Skor total: '+all+' / '+Q.length+'</b></p><p>'+DESC[name]+'</p>'+(plus?'<p class="mut">Tanda “+” berarti kamu sudah mulai menguasai sebagian materi level berikutnya.</p>':'')+'</div>';
+h+='<div class="card"><h2>Rincian per level</h2>';
+for(var l=0;l<5;l++)h+='<div class="row"><b>'+LV[l]+'</b><div class="bar"><i style="width:'+(sc[l]/tot[l]*100)+'%"></i></div><span>'+sc[l]+'/'+tot[l]+'</span></div>';
+h+='<p class="mut" style="margin-top:12px">Aturan penilaian: sebuah level dianggap lulus jika benar minimal 8 dari 12 soal. Level akhir adalah level tertinggi yang lulus secara berurutan.</p></div>';
+var wr='';
+Q.forEach(function(q,k){if(ans[k]!==q[4])wr+='<div class="rv"><b>['+LV[q[0]]+']</b> '+esc(q[2])+'<br><span class="w">Jawabanmu: '+esc(ans[k]===undefined?'(tidak dijawab)':q[3][ans[k]])+'</span> · <span class="a">Benar: '+esc(q[3][q[4]])+'</span></div>'});
+h+='<div class="card"><h2>Pembahasan jawaban salah</h2>'+(wr||'<p>Semua jawaban benar. Luar biasa!</p>')+'</div><button class="btn" id="sv">Simpan dan bagikan hasil sebagai gambar</button><div id="im"></div><button class="btn ghost" id="rs">Ulangi tes</button>';
+app.innerHTML=h;window.scrollTo(0,0);document.getElementById('rs').onclick=start;document.getElementById('sv').onclick=function(){card(name+(plus?'+':''),all,sc,tot)}}
+start();
+</script>
+</body>
+</html>
